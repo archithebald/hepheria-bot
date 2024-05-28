@@ -1,0 +1,7 @@
+node_modules
+.env
+config.json
+package-lock.json
+package.json
+cache.json
+giveaway.json

@@ -1,0 +1,20 @@
+{
+    "ban": {
+        "non-existant": "Cet utilisateur n'existe plus sur ce serveur.",
+        "owner": "Tu ne peux pas bannir le fondateur.",
+        "user": "Tu ne peux pas bannir cet utilisateur.",
+        "higherRole": "Je ne peux pas bannir un utilisateur avec un role plus haut que le mien."
+    },
+    "kick": {
+        "non-existant": "Cet utilisateur n'existe plus sur ce serveur.",
+        "owner": "Tu ne peux pas exclure le fondateur.",
+        "user": "Tu ne peux pas exclure cet utilisateur.",
+        "higherRole": "Je ne peux pas exclure un utilisateur avec un role plus haut que le mien."
+    },
+    "timeout": {
+        "non-existant": "Cet utilisateur n'existe plus sur ce serveur.",
+        "owner": "Tu ne peux pas timeout le fondateur.",
+        "user": "Tu ne peux pas timeout cet utilisateur.",
+        "higherRole": "Je ne peux pas timeout un utilisateur avec un role plus haut que le mien."
+    }
+}
