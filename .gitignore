@@ -3,5 +3,3 @@ node_modules
 config.json
 package-lock.json
 package.json
-cache.json
-giveaway.json
