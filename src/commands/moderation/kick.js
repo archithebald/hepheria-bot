@@ -14,10 +14,17 @@ const errorMessages = require(path.join(
   "error-messages.json"
 ))["kick"];
 
+const { readConfig } = require("../../utils/functions");
+
+const config = readConfig(process.env.ENVIRONMENT);
+
+const commandName = config.COMMANDS.kick.name;
+const commandDesc = config.COMMANDS.kick.description;
+
 module.exports = {
   deleted: false,
-  name: "kick",
-  description: "Kicks a member!!!",
+  name: commandName,
+  description: commandDesc,
   // devOnly: Boolean,
   // testOnly: Boolean,
   options: [
@@ -68,9 +75,7 @@ module.exports = {
     }
 
     if (targetUserRolePosition >= botRolePosition) {
-      await interaction.reply(
-        errorMessages["higherRole"]
-      );
+      await interaction.reply(errorMessages["higherRole"]);
       return;
     }
 

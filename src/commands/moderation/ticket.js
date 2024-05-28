@@ -10,16 +10,23 @@ const {
   StringSelectMenuOptionBuilder,
 } = require("discord.js");
 const path = require("path");
-const { getClientAvatar, readConfig } = require(path.join(__dirname, "..", "..", "utils", "functions.js"))
+const { getClientAvatar, readConfig } = require(path.join(
+  __dirname,
+  "..",
+  "..",
+  "utils",
+  "functions.js"
+));
 
-const config = readConfig(process.env.ENVIRONMENT)
+const config = readConfig(process.env.ENVIRONMENT);
+
+const commandName = config.COMMANDS.ticket.name;
+const commandDesc = config.COMMANDS.ticket.description;
 
 module.exports = {
   deleted: false,
-  name: "setup-ticket",
-  description: "Command to setup ticket channel.",
-  // devOnly: Boolean,
-  // testOnly: Boolean,
+  name: commandName,
+  description: commandDesc,
   permissionsRequired: [PermissionFlagsBits.Administrator],
   botPermissions: [PermissionFlagsBits.Administrator],
 
@@ -45,42 +52,42 @@ module.exports = {
       .setColor(embedColor);
 
     const select = new StringSelectMenuBuilder()
-      .setCustomId('ticketSelect')
-      .setPlaceholder('Pour quelle raison ouvrez vous un ticket?')
+      .setCustomId("ticketSelect")
+      .setPlaceholder("Pour quelle raison ouvrez vous un ticket?")
       .addOptions(
         new StringSelectMenuOptionBuilder()
-        .setLabel('Question')
-        .setEmoji('❓')
-        .setValue('❓:Question'),
+          .setLabel("Question")
+          .setEmoji("❓")
+          .setValue("❓:Question"),
         new StringSelectMenuOptionBuilder()
-        .setLabel('Report')
-        .setEmoji('🚩')
-        .setValue('🚩:Report'),
+          .setLabel("Report")
+          .setEmoji("🚩")
+          .setValue("🚩:Report"),
         new StringSelectMenuOptionBuilder()
-        .setLabel('Contestation sanction')
-        .setEmoji('👊')
-        .setValue('👊:Contestation sanction'),
+          .setLabel("Contestation sanction")
+          .setEmoji("👊")
+          .setValue("👊:Contestation sanction"),
         new StringSelectMenuOptionBuilder()
-        .setLabel('Partenariat')
-        .setEmoji('🤝')
-        .setValue('🤝:Partenariat'),
+          .setLabel("Partenariat")
+          .setEmoji("🤝")
+          .setValue("🤝:Partenariat"),
         new StringSelectMenuOptionBuilder()
-        .setLabel('Candidature')
-        .setEmoji('📝')
-        .setValue('📝:Candidature'),
+          .setLabel("Candidature")
+          .setEmoji("📝")
+          .setValue("📝:Candidature"),
         new StringSelectMenuOptionBuilder()
-        .setLabel('Problème boutique')
-        .setEmoji('💎')
-        .setValue('💎:Problème boutique'),
+          .setLabel("Problème boutique")
+          .setEmoji("💎")
+          .setValue("💎:Problème boutique"),
         new StringSelectMenuOptionBuilder()
-        .setLabel('Problème en jeu')
-        .setEmoji('🚨')
-        .setDescription("Duplication, cheat ou autre.")
-        .setValue('🚨:Problème en jeu'),
+          .setLabel("Problème en jeu")
+          .setEmoji("🚨")
+          .setDescription("Duplication, cheat ou autre.")
+          .setValue("🚨:Problème en jeu"),
         new StringSelectMenuOptionBuilder()
-        .setLabel('Autre')
-        .setEmoji('🫙')
-        .setValue('🫙:Autre'),
+          .setLabel("Autre")
+          .setEmoji("🫙")
+          .setValue("🫙:Autre")
       );
 
     const Buttons = new ActionRowBuilder().addComponents(select);
@@ -88,6 +95,6 @@ module.exports = {
     interaction.reply({
       embeds: [embed],
       components: [Buttons],
-    })
+    });
   },
 };

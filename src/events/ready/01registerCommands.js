@@ -1,14 +1,13 @@
-const { testServer } = require('../../../config.json');
-const areCommandsDifferent = require('../../utils/areCommandsDifferent');
-const getApplicationCommands = require('../../utils/getApplicationCommands');
-const getLocalCommands = require('../../utils/getLocalCommands');
+const areCommandsDifferent = require("../../utils/areCommandsDifferent");
+const getApplicationCommands = require("../../utils/getApplicationCommands");
+const getLocalCommands = require("../../utils/getLocalCommands");
 
 module.exports = async (client) => {
   try {
     const localCommands = getLocalCommands();
     const applicationCommands = await getApplicationCommands(
       client,
-      testServer
+      process.env.GUILD_ID
     );
 
     for (const localCommand of localCommands) {
@@ -39,6 +38,10 @@ module.exports = async (client) => {
             `⏩ Skipping registering command "${name}" as it's set to delete.`
           );
           continue;
+        }
+
+        if (!client.commands.has(localCommand)) {
+          await applicationCommands.delete(localCommand.id);
         }
 
         await applicationCommands.create({

@@ -2,17 +2,22 @@ const {
   PermissionFlagsBits,
   ApplicationCommandOptionType,
   EmbedBuilder,
-  Colors
+  Colors,
 } = require("discord.js");
-const fs = require('fs');
+const fs = require("fs");
 const path = require("path");
-const {
-  timeIsUp,
-  readConfig,
-  updateTimestamp,
-} = require(path.join(__dirname, "..", "..", "utils", "functions.js"))
+const { timeIsUp, readConfig, updateTimestamp } = require(path.join(
+  __dirname,
+  "..",
+  "..",
+  "utils",
+  "functions.js"
+));
 
-const config = readConfig(process.env.ENVIRONMENT)
+const config = readConfig(process.env.ENVIRONMENT);
+
+const commandName = config.COMMANDS.start_giveaway.name;
+const commandDesc = config.COMMANDS.start_giveaway.description;
 
 function secondsToTimestamp(seconds) {
   const days = Math.floor(seconds / (3600 * 24)); // 86400 seconds in a day
@@ -52,7 +57,7 @@ function updateJson(options, messageId) {
     mention: mention,
     unixEpochTime: unixEpochTime,
     messageId: messageId,
-  })
+  });
 
   fs.writeFileSync(jsonFileName, JSON.stringify(jsonData));
 
@@ -62,12 +67,11 @@ function updateJson(options, messageId) {
 }
 
 module.exports = {
-  name: 'start-giveaway',
-  description: 'Start a giveaway.',
-
-  // devOnly: Boolean,
+  name: commandName,
+  description: commandDesc,
   testOnly: false,
-  options: [{
+  options: [
+    {
       name: "titre",
       description: "Qu'est-ce que tu vas faire gagner?",
       required: true,
@@ -90,9 +94,8 @@ module.exports = {
       description: "Le rôle mentionné (par défaut @everyone).",
       required: false,
       type: ApplicationCommandOptionType.Role,
-    }
+    },
   ],
-  // deleted: Boolean,
   permissionsRequired: [PermissionFlagsBits.Administrator],
   botPermissions: [PermissionFlagsBits.Administrator],
 
@@ -105,13 +108,21 @@ module.exports = {
 
     const title = interaction.options.get("titre").value;
     var temps = interaction.options.get("temps").value;
-    const winners = interaction.options.get("gagnants") ? interaction.options.get("gagnants").value : defaultValueForWinners;
-    const mention = interaction.options.get("mention") ? interaction.options.get("mention").role : defaultValueForMention;
+    const winners = interaction.options.get("gagnants")
+      ? interaction.options.get("gagnants").value
+      : defaultValueForWinners;
+    const mention = interaction.options.get("mention")
+      ? interaction.options.get("mention").role
+      : defaultValueForMention;
 
     const embed = new EmbedBuilder()
       .setColor(config.COLORS.EMBED_COLOR)
       .setTitle(title)
-      .setDescription(`Réagis avec 🎉 pour participer!\nSe termine dans: **${updateTimestamp(temps)}**\n`)
+      .setDescription(
+        `Réagis avec 🎉 pour participer!\nSe termine dans: **${updateTimestamp(
+          temps
+        )}**\n`
+      )
       .setFooter({
         text: `${winners} Gagnants | giveaway`,
       });
@@ -120,10 +131,10 @@ module.exports = {
       try {
         const message = await channel.send({
           embeds: [embed],
-          content: `${mention}\n \n🎉 **GIVEAWAY** 🎉`
+          content: `${mention}\n \n🎉 **GIVEAWAY** 🎉`,
         });
         await message.react("🎉");
-        return message
+        return message;
       } catch (error) {
         console.error("Failed to send message or react:", error);
         return null;
@@ -135,32 +146,35 @@ module.exports = {
 
     interaction.reply({
       content: "Message créé",
-      ephemeral: true
+      ephemeral: true,
     });
 
     const index = updateJson(interaction.options, messageId);
 
     const intervalId = setInterval(() => {
-      temps--
+      temps--;
 
       const newEmbed = new EmbedBuilder()
         .setColor(config.COLORS.EMBED_COLOR)
         .setTitle(title)
-        .setDescription(`Réagis avec 🎉 pour participer!\nSe termine dans: **${updateTimestamp(temps)}**\n`)
+        .setDescription(
+          `Réagis avec 🎉 pour participer!\nSe termine dans: **${updateTimestamp(
+            temps
+          )}**\n`
+        )
         .setFooter({
           text: `${winners} Gagnants | giveaway`,
         });
 
       message.edit({
         embeds: [newEmbed],
-        content: `${mention}\n \n🎉 **GIVEAWAY** 🎉`
-      })
+        content: `${mention}\n \n🎉 **GIVEAWAY** 🎉`,
+      });
     }, 1000);
 
     setTimeout(() => {
       clearInterval(intervalId);
       timeIsUp(index, client, interaction.options, messageId);
     }, temps * 1000);
-
   },
 };

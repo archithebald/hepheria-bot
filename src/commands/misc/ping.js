@@ -1,9 +1,7 @@
 module.exports = {
-  name: 'ping',
-  description: 'Pong!',
-  // devOnly: Boolean,
+  name: "ping",
+  description: "Pong!",
   testOnly: true,
-  // options: Object[],
   deleted: true,
 
   callback: (client, interaction) => {

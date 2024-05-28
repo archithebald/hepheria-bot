@@ -14,13 +14,16 @@ const errorMessages = require(path.join(
   "..",
   "error-messages.json"
 ))["ban"];
+const { readConfig } = require("../../utils/functions");
+
+const config = readConfig(process.env.ENVIRONMENT);
+
+const commandName = config.COMMANDS.ban.name;
+const commandDesc = config.COMMANDS.ban.description;
 
 module.exports = {
-  deleted: false,
-  name: "ban",
-  description: "Bans a member!!!",
-  // devOnly: Boolean,
-  // testOnly: Boolean,
+  name: commandName,
+  description: commandDesc,
   options: [
     {
       name: "membre",
@@ -69,9 +72,7 @@ module.exports = {
     }
 
     if (targetUserRolePosition >= botRolePosition) {
-      await interaction.reply(
-        errorMessages["higherRole"]
-      );
+      await interaction.reply(errorMessages["higherRole"]);
       return;
     }
 
