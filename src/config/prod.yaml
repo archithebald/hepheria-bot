@@ -9,8 +9,29 @@ CHANNELS:
 ROLES:
   JOINING_ROLE: ""
 
+COMMANDS:
+  invite:
+    name: "invites"
+    description: "Suivi des invitations d'un utilisateur."
+  start_giveaway:
+    name: "start_giveaway"
+    description: "Commande pour lancer un giveaway."
+  ban:
+    name: "ban"
+    description: "Bannir un utilisateur définitivement."
+  clear:
+    name: "clear"
+    description: "Supprimer des messages."
+  kick:
+    name: "kick"
+    description: "Exclure un utilisateur du serveur."
+  ticket:
+    name: "setup-ticket"
+    description: "Ticket."
+
 MESSAGES:
   WELCOME_MESSAGE: "Bienvenue ${member} sur Hepheria\n \nNous sommes maintenant **${memberCount}** sur le serveur !"
+  INVITE_COMMAND_MESSAGE: "**Validé ✅ ${totalUses}\nFake ❌ ${totalFakes}\nQuitté 👋 ${totalLeaves}**"
 
 IMAGES:
   WELCOME_IMAGE: "https://media.discordapp.net/attachments/1222577382926581883/1232289893032525847/Plan_de_travail_3.png?ex=6628eae5&is=66279965&hm=a51f16d7d20802037c5e3673edb854f2bc408489793770a46cebaca431bdc650&=&format=webp&quality=lossless&width=1440&height=471"
