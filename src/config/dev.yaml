@@ -9,6 +9,9 @@ CHANNELS:
 ROLES:
   JOINING_ROLE: "membre"
 
+CATEGORIES:
+  TICKET_CATEGORY: ""
+
 COMMANDS:
   invite:
     name: "invites"

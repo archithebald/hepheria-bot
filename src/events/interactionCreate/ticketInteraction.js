@@ -5,6 +5,10 @@ const {
   Colors
 } = require("discord.js");
 
+const { readConfig } = require("../../utils/functions.js");
+
+const config = readConfig(process.env.ENVIRONMENT);
+
 module.exports = async (client, interaction) => {
   const user = interaction.user;
 
@@ -16,7 +20,7 @@ module.exports = async (client, interaction) => {
       name: `${emoji}-✅-ticket-${user.username}`,
       type: ChannelType.GuildText,
       topic: `Ticket user: ${user.username}`,
-      parent: '1229891383083536437',
+      parent: config.CATEGORIES.TICKET_CATEGORY,
       permissionOverwrites: [{
           id: interaction.guild.id,
           deny: [PermissionsBitField.Flags.ViewChannel],
